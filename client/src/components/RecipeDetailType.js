@@ -15,7 +15,9 @@ import {
   mdiMagnify,
 } from "@mdi/js";
 
-function RecipeDetailType({ recipes }) {
+function RecipeDetailType({ recipes, ingredients }) {
+  console.log(recipes);
+  console.log(ingredients);
   const [detailType, setDetailType] = useState("small");
   const [searchBy, setSearchBy] = useState("");
   //search for recipes
@@ -32,7 +34,7 @@ function RecipeDetailType({ recipes }) {
           .includes(searchBy.toLocaleLowerCase())
       );
     });
-  }, [searchBy]);
+  }, [searchBy, recipes]);
 
   function handleSearch(event) {
     event.preventDefault();
@@ -93,7 +95,10 @@ function RecipeDetailType({ recipes }) {
         </div>
       </Navbar>
       {detailType === "small" && (
-        <RecipeSmallDetail recipes={filteredRecipes} />
+        <RecipeSmallDetail
+          recipes={filteredRecipes}
+          ingredients={ingredients}
+        />
       )}
       {detailType === "large" && <RecipeList recipes={filteredRecipes} />}
       {detailType === "table" && <RecipeTable recipes={filteredRecipes} />}
