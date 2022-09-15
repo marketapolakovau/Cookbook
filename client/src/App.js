@@ -1,58 +1,51 @@
-import { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Offcanvas from "react-bootstrap/Offcanvas";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import RecipeDetailType from "./components/RecipeDetailType";
-import Icon from "@mdi/react";
-import { mdiLoading } from "@mdi/js";
-import "./css/recipes.css";
 
 function App() {
-  const [recipes, setRecipes] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const [status, setStatus] = useState("pending");
-  useEffect(() => {
-    fetch("http://localhost:8000/recipe/list")
-      .then((res) => {
-        if (res.status > 399) {
-          setStatus("error");
-        } else {
-          return res.json();
-        }
-      })
-      .then((data) => {
-        setRecipes(data);
-        setStatus("success");
-      })
-      .catch((err) => {
-        setStatus("error");
-      });
-    fetch("http://localhost:8000/ingredient/list")
-      .then((res) => {
-        if (res.status > 399) {
-          setStatus("error");
-        } else {
-          return res.json();
-        }
-      })
-      .then((data) => {
-        setIngredients(data);
-      });
-  }, []);
-  if (status === "success") {
-    return <RecipeDetailType recipes={recipes} ingredients={ingredients} />;
-  } else if (status === "pending") {
-    return (
-      <div className="pending">
-        <Icon size={5} path={mdiLoading} spin={true} />
-      </div>
-    );
-  } else {
-    return (
-      <div className="error">
-        <div>Omlouváme se, ale recepty se nepodařilo načíst</div>
-      </div>
-    );
-  }
+  let navigate = useNavigate();
+
+  return (
+    <div className="App">
+      <Navbar
+        fixed="top"
+        expand={"sm"}
+        className="mb-3"
+        bg="dark"
+        variant="dark"
+      >
+        <Container fluid>
+          <Navbar.Brand onClick={() => navigate("/")}>
+            Hatchery Cookbook
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
+          <Navbar.Offcanvas id={`offcanvasNavbar-expand-sm`}>
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-sm`}>
+                Hatchary Cookbook
+              </Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <Nav className="justify-content-end flex-grow-1 pe-3">
+                <Nav.Link onClick={() => navigate("/recipeList")}>
+                  Recepty
+                </Nav.Link>
+                <Nav.Link onClick={() => navigate("/ingredientList")}>
+                  Ingredience
+                </Nav.Link>
+              </Nav>
+            </Offcanvas.Body>
+          </Navbar.Offcanvas>
+        </Container>
+      </Navbar>
+
+      <Outlet />
+    </div>
+  );
 }
 
 export default App;
