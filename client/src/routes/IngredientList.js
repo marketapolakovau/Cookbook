@@ -3,10 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import IngredientCard from "../components/IngredientCard";
 import Icon from "@mdi/react";
 import { mdiLoading } from "@mdi/js";
-import "../css/recipes.css";
 
 function IngredientList() {
-  const [recipes, setRecipes] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [status, setStatus] = useState("pending");
   useEffect(() => {
@@ -14,6 +12,7 @@ function IngredientList() {
       .then((res) => {
         if (res.status > 399) {
           setStatus("error");
+          Promise.reject();
         } else {
           return res.json();
         }
@@ -21,6 +20,9 @@ function IngredientList() {
       .then((data) => {
         setIngredients(data);
         setStatus("success");
+      })
+      .catch((err) => {
+        setStatus("error");
       });
   }, []);
   if (status === "success") {

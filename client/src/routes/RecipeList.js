@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RecipeDetailType from "../components/RecipeDetailType";
 import Icon from "@mdi/react";
 import { mdiLoading } from "@mdi/js";
-import "../css/recipes.css";
 
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
@@ -14,6 +13,7 @@ function RecipeList() {
       .then((res) => {
         if (res.status > 399) {
           setStatus("error");
+          Promise.reject("error");
         } else {
           return res.json();
         }
@@ -29,12 +29,16 @@ function RecipeList() {
       .then((res) => {
         if (res.status > 399) {
           setStatus("error");
+          Promise.reject("error");
         } else {
           return res.json();
         }
       })
       .then((data) => {
         setIngredients(data);
+      })
+      .catch((err) => {
+        setStatus("error");
       });
   }, []);
   if (status === "success") {

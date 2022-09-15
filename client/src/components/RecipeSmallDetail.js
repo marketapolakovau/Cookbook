@@ -13,7 +13,7 @@ function RecipeSmallDetail({ recipes, ingredients }) {
     >
       {recipes.map((recipe) => {
         return (
-          <Col>
+          <Col key={recipe.id}>
             <Card>
               <Card.Img variant="top" src={recipe.imgUri} alt={recipe.name} />
               <Card.Body>
@@ -28,17 +28,16 @@ function RecipeSmallDetail({ recipes, ingredients }) {
                   return ingredients.map((ingredient) => {
                     if (ingredient.id === recipeIngredient.id) {
                       return (
-                        <Card.Text
+                        <ul
                           style={{
                             color: "grey",
                             fontSize: ".9rem",
                             lineHeight: "1px",
                           }}
+                          key={ingredient.id}
                         >
-                          <ul>
-                            <li>{ingredient.name}</li>
-                          </ul>
-                        </Card.Text>
+                          <li>{ingredient.name}</li>
+                        </ul>
                       );
                     } else {
                       return false;

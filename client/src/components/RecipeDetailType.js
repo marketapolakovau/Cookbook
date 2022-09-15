@@ -2,10 +2,9 @@ import { useState, useMemo } from "react";
 import RecipeSmallDetail from "./RecipeSmallDetail";
 import RecipeList from "./RecipeList";
 import RecipeTable from "./RecipeTable";
+import AddRecipeForm from "./AddRecipeForm";
 
-import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Navbar, Button, Form } from "react-bootstrap";
 
 import Icon from "@mdi/react";
 import {
@@ -13,11 +12,11 @@ import {
   mdiArrowExpand,
   mdiArrowCollapse,
   mdiMagnify,
+  mdiPlus,
 } from "@mdi/js";
 
 function RecipeDetailType({ recipes, ingredients }) {
-  console.log(recipes);
-  console.log(ingredients);
+  const [show, setShow] = useState(false);
   const [detailType, setDetailType] = useState("small");
   const [searchBy, setSearchBy] = useState("");
   //search for recipes
@@ -52,6 +51,7 @@ function RecipeDetailType({ recipes, ingredients }) {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse style={{ justifyContent: "right" }}>
             <Form className="d-flex" onSubmit={handleSearch}>
+              {/* search form */}
               <Form.Control
                 id={"searchInput"}
                 style={{ maxWidth: "150px" }}
@@ -60,6 +60,7 @@ function RecipeDetailType({ recipes, ingredients }) {
                 aria-label="Search"
                 onChange={handleSearchDelete}
               />
+              {/* search button */}
               <Button
                 style={{ marginRight: "8px" }}
                 variant="outline-dark"
@@ -67,6 +68,7 @@ function RecipeDetailType({ recipes, ingredients }) {
               >
                 <Icon size={1} path={mdiMagnify} />
               </Button>
+              {/* small card */}
               <Button
                 variant="outline-dark"
                 onClick={() => {
@@ -76,6 +78,7 @@ function RecipeDetailType({ recipes, ingredients }) {
               >
                 <Icon size={1} path={mdiArrowCollapse} />{" "}
               </Button>
+              {/* large card */}
               <Button
                 variant="outline-dark"
                 onClick={() => {
@@ -85,6 +88,7 @@ function RecipeDetailType({ recipes, ingredients }) {
               >
                 <Icon size={1} path={mdiArrowExpand} />{" "}
               </Button>
+              {/* table card */}
               <Button
                 variant="outline-dark"
                 onClick={() => {
@@ -94,11 +98,28 @@ function RecipeDetailType({ recipes, ingredients }) {
               >
                 <Icon size={1} path={mdiTable} />
               </Button>
+              {/* open modal with add recipe form */}
+              <Button
+                variant="dark"
+                onClick={() => {
+                  setShow(!show);
+                }}
+              >
+                <Icon size={1} path={mdiPlus} />
+                Přidat recept
+              </Button>
             </Form>
           </Navbar.Collapse>
         </div>
       </Navbar>
-      <div class="container">
+      {show === true && (
+        <AddRecipeForm
+          ingredients={ingredients}
+          show={show}
+          setShow={setShow}
+        />
+      )}
+      <div className="container">
         <div className={"d-block d-md-none"}>
           <RecipeList recipes={filteredRecipes} />
         </div>
