@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -8,7 +8,15 @@ function IngredientField({
   ingredientData,
   setIngredientData,
   addIngredient,
+  formData,
 }) {
+  const [isRequired, setisRequired] = useState(true);
+
+  useEffect(() => {
+    formData.ingredients.length > 0
+      ? setisRequired(false)
+      : setisRequired(true);
+  }, [formData.ingredients.length]);
   const handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
@@ -19,26 +27,38 @@ function IngredientField({
       <Form.Group as={Col} className="mb-3">
         <Form.Label>Ingredience</Form.Label>
         <Form.Select
-          value={ingredientData.name}
-          name="name"
+          value={ingredientData.id}
+          name="id"
           onChange={handleChange}
+          required={isRequired}
         >
-          <option value="" disabled>
-            {""}
-          </option>
+          <option>{""}</option>
           {ingredients.map((ingredient) => {
-            return <option key={ingredient.id}>{ingredient.name}</option>;
+            return (
+              <option key={ingredient.id} value={ingredient.id}>
+                {ingredient.name}
+              </option>
+            );
           })}
         </Form.Select>
+        <Form.Control.Feedback type="invalid">
+          Zvolte ingredienci
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group as={Col} className="mb-3">
         <Form.Label>Počet</Form.Label>
         <Form.Control
           type="number"
-          value={ingredientData.count}
-          name="count"
+          value={ingredientData.amount}
+          name="amount"
           onChange={handleChange}
+          min={1}
+          max={1000}
+          required={isRequired}
         />
+        <Form.Control.Feedback type="invalid">
+          Zadejte množství od 1 do 1000
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group as={Col} className="mb-3">
         <Form.Label>Jednotka</Form.Label>
@@ -47,14 +67,23 @@ function IngredientField({
           value={ingredientData.unit}
           name="unit"
           onChange={handleChange}
+          maxLength={10}
+          required={isRequired}
         />
+        <Form.Control.Feedback type="invalid">
+          Zadejte jednotku
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group as={Col} className="mb-3">
         <Button
-          className="addIngredientDataBtn"
+          className="addIngredientDataBtn btn btn-sm"
           variant="outline-dark"
-          class="btn btn-success btn-sm"
           onClick={() => {
+            ingredientData.amount = +ingredientData.amount;
+            ingredientData.name = ingredients.find(
+              (ingredient) => ingredient.id === ingredientData.id
+            )?.name;
+
             addIngredient(ingredientData);
           }}
         >

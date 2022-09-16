@@ -28,29 +28,31 @@ let schema = {
             unit: { type: "string" },
           },
           required: ["id", "amount", "unit"],
-        }
-      ]
-    }
+        },
+      ],
+    },
   },
   required: ["name", "description", "ingredients"],
 };
 
 async function CreateAbl(req, res) {
+  console.log(req.body);
   try {
     const ajv = new Ajv();
     const valid = ajv.validate(schema, req.body);
     if (valid) {
       let recipe = req.body;
 
-      for(let ingredient of recipe.ingredients) {
+      for (let ingredient of recipe.ingredients) {
         const exists = await ingredientDao.getIngredient(ingredient.id);
 
         if (!exists) {
           res.status(400).send({
-            errorMessage: "ingredient with id " + ingredient.id + " does not exist",
+            errorMessage:
+              "ingredient with id " + ingredient.id + " does not exist",
             params: req.body,
           });
-          return; 
+          return;
         }
       }
 

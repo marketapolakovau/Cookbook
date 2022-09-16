@@ -528,5 +528,43 @@
       }
     ],
     "id": "e6a2450d6d6cd747"
+  },
+  {
+    "id": "9f8dffc63029db05",
+    "name": "Vaječná omeleta",
+    "description": "Na pánvi rozpálíme olivový olej. U kvalitních pánví můžeme omeletu připravit i bez oleje.\nRozšlehaná vejce, osolíme a opepříme.\nNa rozpálenou pánev dáme opéct plátky slaniny.\nPoté na ně nalijeme rozšlehaná vejce a necháme ztuhnout. Teplotu nastavíme průměrnou, aby nebyla vejce vespod příliš opečená. Omeleta se neobrací.\nJakmile jsou vejce na povrchu zatuhlá, je omeleta hotová. Opatrně ji podebereme a sesuneme na talíř.\nDobrou chuť. :-)",
+    "imgUri": "https://images.unsplash.com/photo-1510693206972-df098062cb71?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=698&q=80",
+    "ingredients": [
+      {
+        "id": "3f702872fb8e99f8",
+        "name": "sůl",
+        "amount": 1,
+        "unit": "špetka"
+      },
+      {
+        "id": "d8e6bbd4d6038494",
+        "name": "olivový olej",
+        "amount": 1,
+        "unit": "lžíce"
+      },
+      {
+        "id": "7e85150c34fd62eb",
+        "name": "vejce",
+        "amount": 3,
+        "unit": "ks"
+      },
+      {
+        "id": "cd99517791018390",
+        "name": "pepř",
+        "amount": 1,
+        "unit": "špetka"
+      },
+      {
+        "id": "bf0da9e7fe070b99",
+        "name": "slanina",
+        "amount": 4,
+        "unit": "plátky"
+      }
+    ]
   }
 ]

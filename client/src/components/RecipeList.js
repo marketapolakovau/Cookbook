@@ -2,7 +2,7 @@ import React from "react";
 import RecipeCard from "./RecipeCard";
 import Row from "react-bootstrap/Row";
 
-function RecipeList({ recipes }) {
+function RecipeList({ recipes, ingredients }) {
   return (
     <Row
       style={{ margin: "1rem", backgroundColor: "#f8edeb" }}
@@ -11,7 +11,13 @@ function RecipeList({ recipes }) {
       className="g-4"
     >
       {recipes.map((recipe) => {
-        return <RecipeCard key={recipe.id} recipe={recipe} />;
+        return (
+          <RecipeCard
+            key={recipe.id}
+            recipe={recipe}
+            ingredients={ingredients}
+          />
+        );
       })}
     </Row>
   );

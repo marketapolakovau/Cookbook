@@ -117,6 +117,7 @@ function RecipeDetailType({ recipes, ingredients }) {
           ingredients={ingredients}
           show={show}
           setShow={setShow}
+          action="create"
         />
       )}
       <div className="container">
@@ -130,8 +131,12 @@ function RecipeDetailType({ recipes, ingredients }) {
               ingredients={ingredients}
             />
           )}
-          {detailType === "large" && <RecipeList recipes={filteredRecipes} />}
-          {detailType === "table" && <RecipeTable recipes={filteredRecipes} />}
+          {detailType === "large" && (
+            <RecipeList recipes={filteredRecipes} ingredients={ingredients} />
+          )}
+          {detailType === "table" && (
+            <RecipeTable recipes={filteredRecipes} ingredients={ingredients} />
+          )}
         </div>
       </div>
     </>
