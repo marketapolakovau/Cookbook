@@ -1,8 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useContext } from "react";
 import RecipeSmallDetail from "./RecipeSmallDetail";
 import RecipeList from "./RecipeList";
 import RecipeTable from "./RecipeTable";
 import AddRecipeForm from "./AddRecipeForm";
+import UserContext from "../UserProvider";
 
 import { Navbar, Button, Form } from "react-bootstrap";
 
@@ -16,6 +17,8 @@ import {
 } from "@mdi/js";
 
 function RecipeDetailType({ recipes, ingredients }) {
+  const { isAuthorize } = useContext(UserContext);
+
   const [show, setShow] = useState(false);
   const [detailType, setDetailType] = useState("small");
   const [searchBy, setSearchBy] = useState("");
@@ -44,8 +47,8 @@ function RecipeDetailType({ recipes, ingredients }) {
     if (!event.target.value) setSearchBy("");
   }
   return (
-    <>
-      <Navbar collapseOnSelect expand="sm" bg="light">
+    <div className="container">
+      <Navbar collapseOnSelect expand="sm">
         <div className="container-fluid">
           <Navbar.Brand>Seznam receptů</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -99,15 +102,17 @@ function RecipeDetailType({ recipes, ingredients }) {
                 <Icon size={1} path={mdiTable} />
               </Button>
               {/* open modal with add recipe form */}
-              <Button
-                variant="dark"
-                onClick={() => {
-                  setShow(!show);
-                }}
-              >
-                <Icon size={1} path={mdiPlus} />
-                Přidat recept
-              </Button>
+              {isAuthorize && (
+                <Button
+                  variant="dark"
+                  onClick={() => {
+                    setShow(!show);
+                  }}
+                >
+                  <Icon size={1} path={mdiPlus} />
+                  Přidat recept
+                </Button>
+              )}
             </Form>
           </Navbar.Collapse>
         </div>
@@ -139,7 +144,7 @@ function RecipeDetailType({ recipes, ingredients }) {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

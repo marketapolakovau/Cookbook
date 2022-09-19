@@ -5,13 +5,8 @@ import RecipeSmallDetailCard from "./RecipeSmallDetailCard";
 
 function RecipeSmallDetail({ recipes, ingredients }) {
   return (
-    <>
-      <Row
-        style={{ margin: "1rem", backgroundColor: "#f8edeb" }}
-        xs={1}
-        md={3}
-        className="g-4"
-      >
+    <div className="container">
+      <Row xs={1} md={3} className="g-4">
         {recipes.map((recipe) => {
           return (
             <RecipeSmallDetailCard
@@ -22,7 +17,7 @@ function RecipeSmallDetail({ recipes, ingredients }) {
           );
         })}
       </Row>
-    </>
+    </div>
   );
 }
 

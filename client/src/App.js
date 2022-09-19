@@ -1,16 +1,20 @@
 import { Outlet, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
+import UserContext from "./UserProvider";
 
 function App() {
   let navigate = useNavigate();
+  const { handleEditMode, isAuthorize } = useContext(UserContext);
 
   return (
-    <div className="App">
+    <div className="App container">
       <Navbar
         fixed="top"
         expand={"sm"}
@@ -38,6 +42,9 @@ function App() {
                   Ingredience
                 </Nav.Link>
               </Nav>
+              <Button variant="outline-light" onClick={handleEditMode}>
+                {isAuthorize ? "Ukončit úpravy" : "Mód úpravy"}
+              </Button>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

@@ -1,24 +1,41 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Icon from "@mdi/react";
-import { mdiPencil } from "@mdi/js";
+import { mdiPencil, mdiDelete } from "@mdi/js";
 import AddRecipeForm from "./AddRecipeForm";
+import DeleteModal from "./DeleteModal";
+import UserContext from "../UserProvider";
 
 function RecipeSmallDetailCard({ recipe, ingredients }) {
+  const { isAuthorize } = useContext(UserContext);
   const [updateShow, setUpdateShow] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   return (
     <>
       <Col key={recipe.id}>
         <Card>
-          <Icon
-            size={1.2}
-            path={mdiPencil}
-            className="update"
-            onClick={() => {
-              setUpdateShow(!updateShow);
-            }}
-          />
+          {isAuthorize && (
+            <div className="update-delete">
+              <Icon
+                size={1.2}
+                path={mdiPencil}
+                className="update"
+                onClick={() => {
+                  setUpdateShow(!updateShow);
+                }}
+              />
+              <Icon
+                size={1.2}
+                path={mdiDelete}
+                className="delete"
+                onClick={() => {
+                  setShowDeleteModal(!showDeleteModal);
+                }}
+              />
+            </div>
+          )}
           <Card.Img variant="top" src={recipe.imgUri} alt={recipe.name} />
           <Card.Body>
             <Card.Title style={{ fontSize: "1.6rem" }}>
@@ -58,6 +75,13 @@ function RecipeSmallDetailCard({ recipe, ingredients }) {
           ingredients={ingredients}
           recipe={recipe}
           action="update"
+        />
+      )}
+      {showDeleteModal === true && (
+        <DeleteModal
+          showDeleteModal={showDeleteModal}
+          setShowDeleteModal={setShowDeleteModal}
+          recipe={recipe}
         />
       )}
     </>

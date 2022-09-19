@@ -1,7 +1,12 @@
 .App {
-  padding-top: 60px;
+  padding-top: 50px;
   margin: 16px;
 }
+
+.container {
+  background-color: #f8edeb;
+}
+
 .pending {
   width: 100vw;
   height: 100vh;
@@ -18,12 +23,17 @@
   margin-top: 35px;
 }
 
-.update {
-  position: absolute;
-  right: 2px;
+.update,
+.delete {
   color: white;
   background-color: rgba(0, 0, 0, 0.459);
   border-radius: 50px;
   padding: 3px;
   cursor: pointer;
+  margin-right: 4px;
+}
+
+.update-delete {
+  position: absolute;
+  right: 2px;
 }
